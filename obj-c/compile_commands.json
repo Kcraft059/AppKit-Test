@@ -1,0 +1,16 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-I./src/include",
+      "-ObjC",
+      "-o",
+      "obj/main.o",
+      "src/main.m"
+    ],
+    "directory": "/Volumes/Data/camille/Developper/AppKit-Test/obj-c",
+    "file": "/Volumes/Data/camille/Developper/AppKit-Test/obj-c/src/main.m",
+    "output": "/Volumes/Data/camille/Developper/AppKit-Test/obj-c/obj/main.o"
+  }
+]

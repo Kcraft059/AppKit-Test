@@ -1,12 +1,6 @@
 #include <AppKit/AppKit.h>
 #include <Cocoa/Cocoa.h>
-
-@interface Window : NSWindow {
-  NSTextField* label;
-}
-- (instancetype)init;
-- (BOOL)windowShouldClose:(id)sender;
-@end
+#include <main.h>
 
 @implementation Window
 - (instancetype)init {
