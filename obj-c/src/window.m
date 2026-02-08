@@ -33,8 +33,8 @@
 
   NSGlassEffectView* glassView = [[NSGlassEffectView alloc] init];
   glassView.translatesAutoresizingMaskIntoConstraints = NO;
-  glassView.style = NSGlassEffectViewStyleClear;
-  glassView.tintColor = [NSColor colorWithSRGBRed:0 green:0 blue:0 alpha:0.25];
+  glassView.style = NSGlassEffectViewStyleRegular;
+  //glassView.tintColor = [NSColor colorWithSRGBRed:0 green:0 blue:0 alpha:0.1];
 
   [view addSubview:glassView positioned:NSWindowBelow relativeTo:label];
 

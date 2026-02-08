@@ -3,12 +3,12 @@
 @implementation Application
 - (instancetype)init {
   self = [super init];
-  [self setDelegate: [[AppDelegate alloc] init]];
+  self.delegate = [[AppDelegate alloc] init];
   return self;
 }
 @end
 
-int main(int argc, char* argv[]) {
+int main() {
   @autoreleasepool {
     NSApplication* App = [Application sharedApplication];
     [App run];

@@ -6,9 +6,23 @@ HDRDIR := $(SRCDIR)/include
 ODIR   := ./obj
 OUTDIR := ./out
 
+# Final binary output
+NAME :=exec
+APP_PATH := $(OUTDIR)/$(NAME).app
+TARGET := $(OUTDIR)/$(NAME)
+TARGET_APP := $(APP_PATH)/Contents/MacOS/$(NAME)
+PLIST_ELEMS :=\
+	CFBundleName__-string__"$(NAME)"\
+	CFBundleDisplayName__-string__"$(NAME)"\
+	CFBundleIdentifier__-string__"com.example.$(NAME)"\
+	CFBundleVersion__-string__"1.0-dev"\
+	CFBundleExecutable__-string__"$(NAME)"\
+	CFBundlePackageType__-string__"APPL"\
+	NSPrincipalClass__-string__"NSApplication"
+
 # Compiler and flags
 CC := clang
-CFLAGS := -I$(HDRDIR) -ObjC # -Wall -Wextra
+CFLAGS := -I$(HDRDIR) -ObjC -Wall -Wextra
 LIBS := -framework Cocoa
 
 # Find all .c files in SRCDIR (recursively, if you want, use **/*.c instead)
@@ -25,17 +39,6 @@ OBJ := $(patsubst $(SRCDIR)/%.m, $(ODIR)/%.o, $(SRC))
 DEPS := $(wildcard $(HDRDIR)/*.h)
 # could be replaced by plain "header.h"
 
-# Final binary output
-TARGET := $(OUTDIR)/exec
-
-# Default rule
-all: $(TARGET)
-
-## How to build the final executable
-$(TARGET): $(OBJ)
-	@mkdir -p $(OUTDIR)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
-#@echo "Linked -> $@"
 
 ## How to compile each object file
 # kind of function for each *.o, with corresponding .c file
@@ -48,13 +51,33 @@ $(ODIR)/%.o: $(SRCDIR)/%.m $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 #@echo "Compiled -> $@"
 
-# Cleaning rules
-.PHONY: clean bear
+## How to build the final executable
+$(TARGET): $(OBJ)
+	@mkdir -p $(OUTDIR)
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+#@echo "Linked -> $@"
+
+$(TARGET_APP): $(TARGET)
+	@mkdir -p $(APP_PATH)/Contents
+	@mkdir -p $(dir $@)
+	@cp $(TARGET) $(TARGET_APP)
+	@echo "Copied $(TARGET) to $(TARGET_APP)"
+
+	@plutil -create xml1 $(APP_PATH)/Contents/Info.plist
+	@$(foreach elem, $(PLIST_ELEMS),\
+		plutil -insert $(subst __, ,$(elem)) $(APP_PATH)/Contents/Info.plist;)
+
+# Default rule
+all: $(TARGET)
 
 asan: CFLAGS += -fsanitize=address
 asan: $(TARGET)
 
+app: $(TARGET_APP)
+
+# Cleaning rules
+.PHONY: clean
+
 clean:
-	rm -rf $(ODIR)/*
-	rm -f $(TARGET)
-#@echo "Cleaned build artifacts"
+	rm -rf $(ODIR) $(OUTDIR)
+	@echo "Cleaned build artifacts"
