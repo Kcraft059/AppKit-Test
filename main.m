@@ -1,24 +1,29 @@
 #include <Foundation/Foundation.h>
+#include <stdio.h>
 
-@interface myClass: NSObject {
-  NSString* myText;
+@interface myClass : NSObject {
+@public
+  char* myText;
 }
-- (instancetype)init:(NSString*)givenText;
-- (void)mymethod;
+- (instancetype)init:(char*)givenText;
+- (void)print;
 @end
 
 @implementation myClass
-- (instancetype)init:(NSString*)givenText {
+- (instancetype)init:(char*)givenText {
   self = [super init];
-  myText = givenText;
+  self->myText = givenText;
   return self;
 }
-- (void)mymethod {
-  printf("Hello %s!\n", [myText cStringUsingEncoding:NSUTF8StringEncoding]);
+- (void)print {
+  printf("Hello %s!\n", myText);
 }
 @end
 
 int main() {
-  myClass* mainclass = [[myClass alloc] init:@"World"];
-  [mainclass mymethod];
+  myClass* mainclass = [[myClass alloc] init:"Frank"];
+  [mainclass print];
+  printf("String: \"%s\"\n", mainclass->myText);
+  mainclass->myText = "Gloup";
+  [mainclass print];
 }

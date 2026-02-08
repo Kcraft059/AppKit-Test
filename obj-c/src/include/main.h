@@ -4,15 +4,29 @@
 
 // Class declaration
 
-@interface Window : NSWindow {
-  NSTextField* label;
+@interface Application : NSApplication {
 }
+
 - (instancetype)init;
-- (BOOL)windowShouldClose:(id)sender;
 @end
 
-@interface Application : NSApplication {
-  NSObject<NSApplicationDelegate>* appdelegate;
+@interface MainWindow : NSWindow {
 }
+
 - (instancetype)init;
+@end
+
+@interface AppDelegate : NSObject <NSApplicationDelegate> {
+@private
+  NSWindow* window;
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification*)notification;
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)sender;
+@end
+
+@interface MainViewController : NSViewController {
+}
+
+- (void)loadView;
 @end
