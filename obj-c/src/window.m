@@ -1,8 +1,5 @@
 #include <AppKit/AppKit.h>
-#include <AppKit/NSColor.h>
-#include <AppKit/NSLayoutConstraint.h>
 #include <main.h>
-#include <objc/objc.h>
 
 @implementation MainWindow
 - (instancetype)init {
@@ -17,7 +14,7 @@
   self.opaque = NO;
   self.titlebarAppearsTransparent = YES;
   self.title = @"NSGlassView";
-  
+
   return self;
 }
 @end

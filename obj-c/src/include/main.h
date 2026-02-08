@@ -1,6 +1,4 @@
-#include <AppKit/AppKit.h>
 #include <Cocoa/Cocoa.h>
-#include <objc/NSObject.h>
 
 // Class declaration
 

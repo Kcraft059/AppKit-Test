@@ -1,5 +1,4 @@
 #include <main.h>
-#include <objc/objc.h>
 
 @implementation AppDelegate
 - (void)applicationDidFinishLaunching:(NSNotification*)notification {
