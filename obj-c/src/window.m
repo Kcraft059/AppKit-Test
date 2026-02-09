@@ -1,4 +1,3 @@
-#include <AppKit/AppKit.h>
 #include <main.h>
 
 @implementation MainWindow
